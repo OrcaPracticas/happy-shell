@@ -4,3 +4,18 @@
 # @category Shell
 # @autor    jorge.mendez.ortega@gmail.com
 # -------------------------------------------------------- #
+
+# -------------------------------------------------------- #
+#                   Variables Globales
+# -------------------------------------------------------- #
+
+REPOSITORY_PATH="~/repositorios"
+REPOSITORY_WL="${REPOSITORY_PATH}/WhiteLabel"
+REPOSITORY_TVSA="${REPOSITORY_PATH}/TVSA"
+REPOSITORY_CORE="${REPOSITORY_TVSA}/core_app"
+REPOSITORY_UI="${REPOSITORY_CORE}/src/app/userinterfaces"
+REPOSITORY_GQL="${REPOSITORY_TVSA}/GQL"
+GIT_DEFAULT_BRANCH="develop"
+CLUSTER_ENVIROMENT="development"
+GIT_HUB="GitHub"
+GIT_LAB="GitLab"
