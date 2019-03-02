@@ -19,3 +19,17 @@ GIT_DEFAULT_BRANCH="develop"
 CLUSTER_ENVIROMENT="development"
 GIT_HUB="GitHub"
 GIT_LAB="GitLab"
+
+# -------------------------------------------------------- #
+#                      Alias Globales
+# -------------------------------------------------------- #
+
+alias wl="cd $REPOSITORY_WL/" 
+alias core="cd $REPOSITORY_CORE/"
+alias uis="cd $REPOSITORY_UI/"
+alias run_app="./node_modules/.bin/nodemon ./launcher.js"
+alias run_debug=" DEBUG='express:*' ./node_modules/.bin/nodemon ./launcher.js"
+alias puerto="lsof -i -P -n | grep LISTEN"
+alias killNode="killall -9 node"
+alias ll="ls -la -h"
+alias yip="yarn install --peer"
