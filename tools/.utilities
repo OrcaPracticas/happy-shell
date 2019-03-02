@@ -1,0 +1,64 @@
+# -------------------------------------------------------- #
+# Utilidades generales.
+#
+# @package   hapy-shell.
+# @subPacage Tools.
+# @autor     jorge.mendez.ortega@gmail.com
+# -------------------------------------------------------- #
+
+# -------------------------------------------------------- #
+# Permite el manejo de mensajes por tipo y color.
+# 
+# INFO
+#
+# all : Muestra todas las variantes de colores
+# -t  : Muestra un titulo indicado
+# default : Muestra el texto con la posibilidad de perzonalizar
+# 
+# USO 
+#
+# title [modificador] [color del texto] [mensaje] [fondo]
+#
+# EJEMPLOS
+#
+# title all
+# title -t 143 "Este es mi titulo" 5
+# title 143 "Este es mi mensaje" 5
+# -------------------------------------------------------- #
+title(){
+    action=$1
+    color=$2
+    msg=$3
+    bkcolor=$4    
+    case $action in
+        all)
+            for numero in {0..255}
+            do
+                title -t $numero "Valor Font $numero"
+                title -t 0 "Valor Back $numero" $numero
+            done
+        ;;
+        -t)
+            echo
+            if [[ $# -ne 4 ]] 
+            then
+                echo "$(tput setaf 255; tput bold)# -------------- $(tput setaf $color)$msg$(tput setaf 255) -------------- #$(tput sgr0)"
+            else
+                echo "$(tput setab $bkcolor)$(tput setaf 255; tput bold)# -------------- $(tput setaf $color)$msg$(tput setaf 255) -------------- #$(tput sgr0)"
+            fi
+            echo
+        ;;
+        *)
+            color=$1
+            msg=$2
+            bkcolor=$3
+            if [[ $# -ne 3 ]] 
+            then
+                echo "$(tput setaf $color; tput bold)${msg}$(tput sgr0)"
+            else
+                echo "$(tput setab $bkcolor; tput bold) $(tput setaf $color)$msg$(tput sgr0)"
+            fi
+        ;;
+    esac
+}
+## title
