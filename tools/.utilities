@@ -129,3 +129,139 @@ logs(){
     title ${textColor} "${msgOut}${c}" ${backGround}
 }
 ## logs
+
+# -------------------------------------------------------- #
+# Valida la existencia de un archivo.
+# 
+# INFO
+# 
+# -d: Indica que se validara la existencia de un directorio
+# -f : Indica que se validara la existencia de un archivo
+# 
+# USO 
+# 
+# exists [modificador] [path]
+# 
+# EJEMPLO
+# 
+# exists -f  ./logs
+# -------------------------------------------------------- #
+exists(){
+   opt=$1
+   ruta=$2
+   case $opt in
+       -d)
+           if [ ! -d $ruta ]
+           then
+               logs -e "El directorio '${ruta}' no existe"
+               return 0
+           fi
+       ;;
+       -f)
+           if [ ! -f $ruta ]
+           then
+               logs -e "El archivo '${ruta}' no existe"
+               return 0
+           fi
+       ;;
+       *)
+           logs -e "Indique el directorio o archivo para validar su existencia.."
+       ;;
+   esac
+}
+# exists
+
+# -------------------------------------------------------- #
+# Permite el manejo de directorios
+# 
+# INFO
+# 
+# -c : Permite crear un directorio con los permisos 777 y se 
+#      posiciona en el directorio.
+# -cp : Permite copiar un directorio.
+# -d : Elimina un directorio y todo su contenido
+# -r : Renombra un directorio.
+# -s : Crea un Servidor estatico y espone el directorio en el que estemos.
+# 
+# USO 
+# 
+# dir [modificador] [nombre del directrio o puerto]
+# 
+# EJEMPLO
+# 
+# dir -c CreoUnDirectorio
+# dir -d BorrarUnDirectorio
+# dir -s 8080
+# -------------------------------------------------------- #
+dir() {
+   action=$1
+   directory=$2
+   cdirectory=$3
+   case $action in
+       -c)
+           logs -i "Creando el directorio ${directory}"
+           if [ ! -d "${directory}" ]
+           then
+               mkdir $directory
+               chmod -R 750 $directory
+               cd $directory
+               logs -c "mkdir $directory"
+               logs -c "chmod -R 750 $directory"
+               logs -c "cd $directory"
+               logs -s "Directorio creado"
+           else
+               logs -e "El directorio ${directory} ya existe"
+           fi 
+       ;;
+       -cp)
+           logs -i "Copiando el directorio ${directory} a ${cdirectory}"
+           if [  -d "${directory}" ]
+           then
+               cp -r $directory $cdirectory
+               cd $cdirectory
+               logs -c "cp -r $directory $cdirectory"
+               logs -c "cd $cdirectory"
+               logs -s "Directorio copiado"
+           else
+               logs -e "El directorio ${directory} no existe"
+           fi 
+       ;;
+       -d)
+           logs -i "Borrando el directorio ${directory}"
+           if [ -d $directory ]
+           then
+               rm -rf $directory
+               logs -c "rm -rf $directory"
+               logs -s "Directorio eliminado"
+           else
+               logs -e "El directorio ${directory} no existe"
+           fi
+       ;;
+       -r)
+           logs -i "Renombrando directorio ${directory} a {cdirectory}"
+           if [ -d $directory ]
+           then
+               mv $directory $cdirectory
+               logs -c "mv $directory $cdirectory"
+               logs -s "Directorio renombrando"
+           else
+               logs -e "El directorio ${directory} no existe"
+           fi
+       ;;
+       -s)
+           if [ $directory ]
+           then
+             local port="$directory"
+           else
+             local port="8000"
+           fi
+           logs -s "Levantando servidor en el puerto ${port}"
+           logs -c "open \"http://localhost:$port\" && python -m SimpleHTTPServer \"$port\""
+           open "http://localhost:$port" && python -m SimpleHTTPServer "$port"
+       ;;
+       *)
+           logs -e "Proporcione una opción valida"
+       ;;
+   esac
+}
+#dir
