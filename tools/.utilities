@@ -62,3 +62,70 @@ title(){
     esac
 }
 ## title
+
+# -------------------------------------------------------- #
+# Manejo de logs en consola.
+# 
+# INFO
+# 
+# -i: Texto de tipo informativo(valor por defecto)
+# -e : Texto de tipo error
+# -s : Texto de tipo success
+# -w : Texto tipo alerta.
+# 
+# USO 
+# 
+# logs [modificador] [mensaje]
+# 
+# EJEMPLO
+# 
+# logs -i "Esto es un informe"
+# -------------------------------------------------------- #
+logs(){
+    type=$1
+    msg=$2
+    textColor=255
+    backGround=17
+    case $type in
+        -i)
+            msgOut="[ ℹ️ INFO     ] => ${msg}"
+            backGround=17
+        ;;
+        -e)
+            msgOut="[ ❌ ERROR    ] => ${msg}"
+            backGround=52
+        ;;
+        -s)
+            msgOut="[ 🙌 SUCCESS  ] => ${msg}"
+            backGround=22
+        ;;
+        -w)
+            msgOut="[ ⚠️ WARNING  ] => ${msg}"
+            backGround=11
+            textColor=16
+        ;;
+        -m)
+            msgOut="[ 🔖 MARK     ] => ${msg}"
+            backGround=89
+        ;;
+        -c)
+            msgOut="[ 💻 COMMAND     ] => ${msg}"
+            backGround=29
+        ;;
+        *)
+            msg=$1
+            msgOut="[ ℹ️ INFO     ] => ${msg}"
+            backGround=17
+        ;;
+    esac
+
+    longitud=${#msgOut}
+    c=""
+    for ((i=$longitud; i <= 120; i++))
+    do
+        c="${c} "
+    done
+    
+    title ${textColor} "${msgOut}${c}" ${backGround}
+}
+## logs
