@@ -238,7 +238,7 @@ dir() {
            fi
        ;;
        -r)
-           logs -i "Renombrando directorio ${directory} a {cdirectory}"
+           logs -i "Renombrando directorio ${directory} a ${cdirectory}"
            if [ -d $directory ]
            then
                mv $directory $cdirectory
@@ -265,3 +265,131 @@ dir() {
    esac
 }
 #dir
+
+# -------------------------------------------------------- #
+# Permite realizar las operaciones basicas de las ranas
+# 
+# INFO
+# 
+# -e : Permite verificar la existencia de una rama
+# -l : Permite listar todas las ramas
+# -c : Permite crear ramas en el repositorio
+# -d : Permite eliminar una rama
+# -m : Permite realizar elmerge de ramas
+# -u : Permite actualizar la rama.
+# 
+# USO 
+# 
+# rama [comodin] [nombre de a rama este camoo es opcional]
+#
+# EJEMPLO
+# 
+# clone -c demo
+# -------------------------------------------------------- #
+rama(){
+    action=$1
+    branch=$2
+    
+    case ${action} in
+        -e)
+            listBranch=(`git branch -a`)
+            request="success"
+            for item in ${listBranch[*]}
+            do
+                if [[ $branch =~ $item ]]
+                then
+                    request="error"
+                    break
+                fi
+            done
+            echo $request
+        ;;
+        -l)
+            logs -i "Listando ramas"
+            logs -c "git branch -a -v"
+            git branch -a -v
+            logs -s "Fin del listado"
+        ;;
+        -c)
+            if [ $branch ]
+            then
+                validBranch=(`rama -e ${branch}`)
+                logs -i "Creando la rama ${branch}"
+                if [[ $validBranch =~ "success" ]]
+                then
+                    logs -c "git checkout -b $branch"
+                    logs -c "git push --set-upstream origin $branch"
+                    gco -b $branch
+                    git push --set-upstream origin $branch
+                    logs -s "Rama creada"
+                else
+                    logs -w "La rama $branch ya existe"
+                    logs -c "git checkout $branch"
+                    gco -b $branch
+                    logs -m "Cambio de rama"
+                fi
+            else 
+                logs -e "Es necesario facilitar el nombre de la rama"
+            fi
+        ;;
+        -d)
+            if [ $branch ]
+            then
+                validBranch=(`rama -e ${branch}`)
+                logs -i "Borrando la rama ${branch}"
+                if [[ $validBranch =~ "error" ]]
+                then
+                    logs -c "git checkout $GIT_DEFAULT_BRANCH"
+                    logs -c "git branch -D $branch"
+                    logs -c "git push origin :$branch"
+                    git_dev
+                    git branch -D $branch
+                    git push origin :$branch
+                    logs -s "Rama borrada"
+                else
+                    logs -e "La rama $branch no existe"
+                fi
+            else 
+                logs -e "Es necesario facilitar el nombre de la rama"
+            fi
+        ;;
+        -m)
+            validBranch=(`rama -e ${branch}`)
+            logs -i "Fusionando ramas ${branch}"
+            if [[ $validBranch =~ "error" ]]
+            then
+                logs -c "git fetch"
+                logs -c "git pull"
+                logs -c "git pull origin $branch"
+                git_update
+                git pull origin $branch
+                logs -s "Fusion de ramas terminado"
+            else
+                logs -e "La rama $branch no existe"
+            fi
+        ;;
+        -co)
+            validBranch=(`rama -e ${branch}`)
+            logs -i "Pasando a la rama ${branch}"
+            if [[ $validBranch =~ "error" ]]
+            then
+                logs -c "git checkout $branch"
+                gco $branch
+                logs -s "Cambio realizado"
+            else
+                logs -e "No existe la rama ${branch}"
+            fi
+        ;;
+        -u)
+            logs -i "Actualizando rama"
+            logs -c "git fetch"
+            logs -c "git pull"
+            git_update
+            logs -s "Rama actualizada"
+        ;;
+        *)
+            logs -e "Proporcione una acción"
+        ;;
+    esac
+}
+# rama
