@@ -393,3 +393,51 @@ rama(){
     esac
 }
 # rama
+
+# -------------------------------------------------------- #
+# Permite clonar un repositorio
+# 
+# INFO
+# 
+# La ruta que se facilita no tiene que llevar ':' o ".git"
+# 
+# USO 
+# 
+# clone [usuario o organizacion]/[nombre del repo]  [directorio]
+# 
+# EJEMPLO
+# 
+# clone OrcaPracticas/happy-shell
+# -------------------------------------------------------- #
+clone() {
+    repository=$1
+    directory=$2
+    
+    if [ $repository ]
+    then
+        logs -i "Clonando el repositorio ${repository}"
+        if [ $directory ]
+        then
+            logs -c "git clone git@$GIT_HUB:$repository.git $directory"
+            git clone git@$GIT_HUB:$repository.git $directory
+        else 
+            logs -c "git clone git@$GIT_HUB:$repository.git"
+            git clone git@$GIT_HUB:$repository.git
+            demo=${repository%%\/*}
+            directory=${repository/$demo\//}
+        fi
+        cd $directory
+        logs -s "Repositorio clonado satisfactoriamente"
+        rama -c $GIT_DEFAULT_BRANCH
+        FICHERO=package.json
+        if [ -f $FICHERO ]
+        then
+            logs -i "Instalando dependencias"
+            logs -c "yarn install --peer"
+            yip
+            logs -s "Dependnecias instaladas"
+        fi
+    else
+        logs -e "Proporcione el repositorio"
+    fi
+}
