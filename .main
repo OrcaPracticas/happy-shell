@@ -1,0 +1,50 @@
+# -------------------------------------------------------- #
+# Configuracion basica para el manejo de proyectos.
+# 
+# @category Shell
+# @autor    jorge.mendez.ortega@gmail.com
+# -------------------------------------------------------- #
+
+# -------------------------------------------------------- #
+#                   Variables Globales
+# -------------------------------------------------------- #
+
+REPOSITORY_PATH="~/repositorios"
+REPOSITORY_WL="${REPOSITORY_PATH}/WhiteLabel"
+REPOSITORY_TVSA="${REPOSITORY_PATH}/TVSA"
+REPOSITORY_CORE="${REPOSITORY_TVSA}/core_app"
+REPOSITORY_UI="${REPOSITORY_CORE}/src/app/userinterfaces"
+REPOSITORY_GQL="${REPOSITORY_TVSA}/GQL"
+GIT_DEFAULT_BRANCH="develop"
+CLUSTER_ENVIROMENT="development"
+GIT_HUB="GitHub"
+GIT_LAB="GitLab"
+
+# -------------------------------------------------------- #
+#                      Alias Globales
+# -------------------------------------------------------- #
+
+alias wl="cd $REPOSITORY_WL/" 
+alias core="cd $REPOSITORY_CORE/"
+alias uis="cd $REPOSITORY_UI/"
+alias run_app="./node_modules/.bin/nodemon ./launcher.js"
+alias run_debug=" DEBUG='express:*' ./node_modules/.bin/nodemon ./launcher.js"
+alias puerto="lsof -i -P -n | grep LISTEN"
+alias killNode="killall -9 node"
+alias ll="ls -la -h"
+alias yip="yarn install --peer"
+
+# -------------------------------------------------------- #
+#                      GitHub Alias
+# -------------------------------------------------------- #
+
+alias ga="git add"
+alias gc="git commit -m"
+alias gst="git status"
+alias gco="git checkout "
+alias git_update="git fetch; git pull"
+alias git_update_dev="git pull origin ${GIT_DEFAULT_BRANCH}"
+alias gm="git merge ${GIT_DEFAULT_BRANCH}"
+alias git_dev="gco ${GIT_DEFAULT_BRANCH}"
+alias git_master="gco master"
+alias td="tree -L 1 -duhg"
