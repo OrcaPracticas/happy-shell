@@ -48,3 +48,12 @@ alias gm="git merge ${GIT_DEFAULT_BRANCH}"
 alias git_dev="gco ${GIT_DEFAULT_BRANCH}"
 alias git_master="gco master"
 alias td="tree -L 1 -duhg"
+
+# -------------------------------------------------------- #
+#                      Utilidades
+# -------------------------------------------------------- #
+
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.utilities
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.app
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.wl
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.update
