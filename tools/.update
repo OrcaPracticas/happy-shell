@@ -1,0 +1,86 @@
+# -------------------------------------------------------- #
+# Actualizacion de repos
+#
+# @package   hapy-shell.
+# @subPacage Tools.
+# @autor     jorge.mendez.ortega@gmail.com
+# -------------------------------------------------------- #
+
+
+# -------------------------------------------------------- #
+# Permite realizar la actualizacion de los repositorios
+# 
+# INFO
+#
+# -c   : Actualiza el core de la app
+# -ui  : Actualiza todas las ui's de la app
+# -wl  : Actualiza todos los componentes.
+# -app : Actualiza el core y las ui's
+# -all : Actualiza core, ui's y componentes
+# 
+# USO 
+#
+# up [modificador]
+#
+# EJEMPLOS
+#
+# up -c
+# up -ui
+# up -wl
+# up -app
+# up -all
+# -------------------------------------------------------- #
+up(){
+    action=$1
+    interface=$2
+    case $action in
+        -c)
+            logs -i "Actualizando el core"
+            core
+            git_dev
+            git_update
+            yip
+            logs -s "Finde actualizacion del core"
+        ;;
+        -ui)
+            uis
+            logs -s "Actualizando UIS"
+            ficheros=(`ls`)
+            for item in ${ficheros[*]}
+            do
+                if [[ $item =~ "ui-" ]]
+                then
+                    logs -m "Actualizando la ${item}"
+                    app ${item//ui-/}
+                    git_dev
+                    git_update
+                fi
+            done
+            logs -s "Finde actualizacion de UIS"
+        ;;
+        -wl)
+            wl
+            ficheros=(`ls`)
+            for item in ${ficheros[*]}
+            do
+                logs -m "Actualizando el ${item}"
+                label $item
+                git_dev
+                git_update
+                yip
+            done
+        ;;
+        -app)
+            up -c
+            up -ui
+        ;;
+        -all)
+            up -c
+            up -ui
+            up -wl
+        ;;
+        *)
+            logs -e "Facilite una de las opciones de actualizacion"
+        ;;
+    esac
+}
