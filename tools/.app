@@ -11,7 +11,9 @@
 # 
 # INFO
 #
-# -i  : Genera la instalacion de la nueva ui.
+# -i     : Genera la instalacion de la nueva ui.
+# nombre : Busca la ui y te posiciona en ella
+# -l     : Brinda un listado de la UI
 # 
 # USO 
 #
@@ -21,7 +23,8 @@
 #
 # app telehit (levanta una ui)
 # app -i telehit (instala la ui)
-# app -r telehit corre la ui
+# app -l listado de UI's
+# app telehit accede a la UI
 # -------------------------------------------------------- #
 app(){
     option_ui=$1
@@ -35,6 +38,12 @@ app(){
             else 
                 logs -e "Introdusca el nombre de la UI"
             fi
+        ;;
+        -l) 
+            logs -i "Listado de uis instaladas"
+            uis
+            td
+            logs -s "Fin del listado"
         ;;
         *)
             logs -i "Entrando el directorio ui-${option_ui}"
