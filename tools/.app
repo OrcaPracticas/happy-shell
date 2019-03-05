@@ -36,5 +36,16 @@ app(){
                 logs -e "Introdusca el nombre de la UI"
             fi
         ;;
+        *)
+            logs -i "Entrando el directorio ui-${option_ui}"
+            uis
+            if [ -d "ui-${option_ui}" ]
+            then
+                cd ui-$option_ui
+                logs -s "Acceso correcto"
+            else
+               logs -e "LA ui-${option_ui}"
+            fi
+        ;;
     esac
 }
