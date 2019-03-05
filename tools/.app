@@ -29,7 +29,38 @@
 app(){
     option_ui=$1
     interface=$2
+    enviroment=$3
+
+    if [[ $# -ne 3 ]] 
+    then
+        enviroment=$CLUSTER_ENVIROMENT
+    else
+        enviroment=$3
+    fi
+
     case $option_ui in
+        -r|-rd)
+            uis
+            logs -i "🚀 Levantando WebApp ui=$interface, CLUSTER_ENV=$enviroment"
+            if [ -d "ui-${interface}" ]
+            then
+                core
+                export NODE_ENV=development
+                export CLUSTER_ENV=$enviroment
+                export UI=ui-$interface
+                
+                if [[ $1 =~ "rd" ]] 
+                then 
+                    logs -m "Levantando la app para debugger"
+                    run_debug
+                else 
+                    yarn init-eslint:ui-$interface
+                    run_app
+                fi
+            else
+                logs -e "Introdusca una UI valida"
+            fi
+        ;;
         -i)
             if [ $interface ]
             then
