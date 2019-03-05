@@ -46,5 +46,16 @@ label(){
             td
             logs -s "Fin del listado"
         ;;
+        *)
+            logs -i "Entrando al directorio de ${option}"
+            wl
+            if [ -d "${option}" ]
+            then
+                cd $option
+                logs -s "Acceso correcto"
+            else
+               logs -e "Directorio no existente ${option}"
+            fi
+        ;;
     esac
 }
