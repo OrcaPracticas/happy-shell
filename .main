@@ -10,6 +10,7 @@
 # -------------------------------------------------------- #
 
 REPOSITORY_PATH="~/repositorios"
+REPOSITIRY_PRACTICAS="${REPOSITORY_PATH}/GitLab/OrcaTools/tools"
 REPOSITORY_WL="${REPOSITORY_PATH}/WhiteLabel"
 REPOSITORY_TVSA="${REPOSITORY_PATH}/TVSA"
 REPOSITORY_CORE="${REPOSITORY_TVSA}/core_app"
@@ -48,3 +49,12 @@ alias gm="git merge ${GIT_DEFAULT_BRANCH}"
 alias git_dev="gco ${GIT_DEFAULT_BRANCH}"
 alias git_master="gco master"
 alias td="tree -L 1 -duhg"
+
+# -------------------------------------------------------- #
+#                      Utilidades
+# -------------------------------------------------------- #
+
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.utils
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.uis
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.wl
+source ~/repositorios/OrcaPracticas/happy-shell/tools/.update
