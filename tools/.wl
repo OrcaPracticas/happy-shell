@@ -40,5 +40,11 @@ label(){
                 logs -e "Introdusca el nombre del componente de White label"
             fi
         ;;
+        -l) 
+            logs -i "Listado de componentes White label"
+            wl
+            td
+            logs -s "Fin del listado"
+        ;;
     esac
 }
