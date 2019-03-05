@@ -10,6 +10,7 @@
 # -------------------------------------------------------- #
 
 REPOSITORY_PATH="~/repositorios"
+REPOSITIRY_PRACTICAS="${REPOSITORY_PATH}/GitLab/OrcaTools/tools"
 REPOSITORY_WL="${REPOSITORY_PATH}/WhiteLabel"
 REPOSITORY_TVSA="${REPOSITORY_PATH}/TVSA"
 REPOSITORY_CORE="${REPOSITORY_TVSA}/core_app"
