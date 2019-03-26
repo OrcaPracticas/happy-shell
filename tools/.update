@@ -34,6 +34,14 @@ up(){
     action=$1
     interface=$2
     case $action in
+        -cg)
+            logs -i "Actualizando del core de GQL"
+            gqlc
+            git_dev
+            git_update
+            yip
+            logs -s "Finbde actualizacion del core de GQL"
+        ;;
         -c)
             logs -i "Actualizando el core"
             core
@@ -58,6 +66,22 @@ up(){
             done
             logs -s "Finde actualizacion de UIS"
         ;;
+        -api)
+            apis
+            logs -s "Actualizando Apis"
+            ficheros=(`ls`)
+            for item in ${ficheros[*]}
+            do
+                if [[ $item =~ "gql-" ]]
+                then
+                    logs -m "Actualizando la api ${item}"
+                    gapi ${item//gql-/}
+                    git_dev
+                    git_update
+                fi
+            done
+            logs -s "Finde actualizacion de Apis"
+        ;;
         -wl)
             wl
             ficheros=(`ls`)
@@ -75,9 +99,13 @@ up(){
             up -ui
         ;;
         -all)
-            up -c
-            up -ui
+            up -app
             up -wl
+            up -apis
+        ;;
+        -apis)
+            up -cg
+            up -api
         ;;
         *)
             logs -e "Facilite una de las opciones de actualizacion"
