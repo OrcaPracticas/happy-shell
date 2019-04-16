@@ -35,7 +35,7 @@ label(){
             if [ $widget ]
             then
                 wl
-                clone televisa-digital/$widget
+                clone televisa-digital/$widget $widget master
             else 
                 logs -e "Introdusca el nombre del componente de White label"
             fi

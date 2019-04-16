@@ -412,7 +412,15 @@ rama(){
 clone() {
     repository=$1
     directory=$2
-    
+
+    if [[ $# -ne 3 ]] 
+    then
+        real_rama=$GIT_DEFAULT_BRANCH
+    else
+        real_rama=$3
+    fi
+
+
     if [ $repository ]
     then
         logs -i "Clonando el repositorio ${repository}"

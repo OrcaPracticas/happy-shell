@@ -45,7 +45,7 @@ up(){
         -c)
             logs -i "Actualizando el core"
             core
-            git_dev
+            gco $GIT_DEFAULT_BRANCH_UI
             git_update
             yip
             logs -s "Finde actualizacion del core"
@@ -60,7 +60,7 @@ up(){
                 then
                     logs -m "Actualizando la ${item}"
                     app ${item//ui-/}
-                    git_dev
+                    gco $GIT_DEFAULT_BRANCH_UI
                     git_update
                 fi
             done
@@ -89,7 +89,7 @@ up(){
             do
                 logs -m "Actualizando el ${item}"
                 label $item
-                git_dev
+                gco master
                 git_update
                 yip
             done

@@ -65,7 +65,7 @@ app(){
             if [ $interface ]
             then
                 uis
-                clone televisa-digital/ui-$interface
+                clone televisa-digital/ui-$interface ui-$interface $GIT_DEFAULT_BRANCH_UI
             else 
                 logs -e "Introdusca el nombre de la UI"
             fi
